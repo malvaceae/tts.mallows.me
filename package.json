@@ -4,6 +4,7 @@
     "serve": "vite serve"
   },
   "devDependencies": {
+    "@aws-sdk/client-cloudwatch-logs": "^3.509.0",
     "@aws-sdk/client-sagemaker": "^3.509.0",
     "@aws-sdk/client-sagemaker-runtime": "^3.509.0",
     "@quasar/vite-plugin": "^1.6.0",

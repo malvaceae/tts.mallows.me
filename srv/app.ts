@@ -8,11 +8,13 @@ import {
   aws_certificatemanager as acm,
   aws_cloudfront as cloudfront,
   aws_cloudfront_origins as origins,
+  aws_events as events,
+  aws_events_targets as events_targets,
   aws_iam as iam,
   aws_lambda as lambda,
   aws_lambda_nodejs as nodejs,
   aws_route53 as route53,
-  aws_route53_targets as targets,
+  aws_route53_targets as route53_targets,
   aws_s3 as s3,
   aws_sagemaker as sagemaker,
 } from 'aws-cdk-lib';
@@ -126,6 +128,47 @@ class MallowsTtsStack extends Stack {
       value: apiEndpoint,
     });
 
+    // Cleaner
+    const cleaner = new nodejs.NodejsFunction(this, 'Cleaner', {
+      architecture: lambda.Architecture.ARM_64,
+      runtime: lambda.Runtime.NODEJS_20_X,
+      timeout: Duration.minutes(1),
+      environment: {
+        ENDPOINT_NAME: endpointName,
+        TZ: 'Asia/Tokyo',
+      },
+      initialPolicy: [
+        new iam.PolicyStatement({
+          actions: [
+            'logs:DescribeLogStreams',
+            'logs:GetLogEvents',
+          ],
+          resources: [
+            `arn:aws:logs:${this.region}:${this.account}:log-group:/aws/sagemaker/Endpoints/${endpointName}:*`,
+          ],
+        }),
+        new iam.PolicyStatement({
+          actions: [
+            'sagemaker:DeleteEndpoint',
+          ],
+          resources: [
+            endpointArn,
+          ],
+        }),
+      ],
+      bundling: {
+        minify: true,
+      },
+    });
+
+    // Cleaner Rule
+    new events.Rule(this, 'CleanerRule', {
+      schedule: events.Schedule.rate(Duration.minutes(1)),
+      targets: [
+        new events_targets.LambdaFunction(cleaner),
+      ],
+    });
+
     // App Bucket
     const appBucket = new s3.Bucket(this, 'AppBucket', {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
@@ -229,7 +272,7 @@ class MallowsTtsStack extends Stack {
       });
 
       // App Distribution Alias Record Target
-      const target = route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(appDistribution));
+      const target = route53.RecordTarget.fromAlias(new route53_targets.CloudFrontTarget(appDistribution));
 
       // App Distribution Alias Record
       new route53.ARecord(this, 'AppDistributionAliasRecord', {
