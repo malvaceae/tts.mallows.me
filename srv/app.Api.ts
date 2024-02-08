@@ -1,5 +1,5 @@
 // AWS Lambda
-import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
+import { LambdaFunctionURLHandler } from 'aws-lambda';
 
 // AWS SDK - SageMaker
 import {
@@ -32,7 +32,7 @@ const sagemakerRuntime = new SageMakerRuntimeClient({
 });
 
 // Lambda Handler
-export const handler: APIGatewayProxyHandlerV2 = async ({ queryStringParameters, requestContext }) => {
+export const handler: LambdaFunctionURLHandler = async ({ queryStringParameters, requestContext }) => {
   try {
     if (requestContext.http.path === '/') {
       switch (requestContext.http.method) {
