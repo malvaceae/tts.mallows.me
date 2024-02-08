@@ -42,8 +42,8 @@ class MallowsTtsStack extends Stack {
       this.node.getContext('image'),
       this.node.getContext('modelDataUrl'),
       this.node.getContext('endpointName'),
-      this.node.getContext('domainName'),
-      this.node.getContext('certificateArn'),
+      this.node.tryGetContext('domainName'),
+      this.node.tryGetContext('certificateArn'),
       this.node.tryGetContext('githubRepo'),
     ];
 
@@ -136,8 +136,8 @@ class MallowsTtsStack extends Stack {
       value: appBucket.bucketName,
     });
 
-    // Certificate
-    const certificate = acm.Certificate.fromCertificateArn(this, 'Certificate', certificateArn);
+    // If the certificate arn exists, get the Certificate.
+    const certificate = certificateArn && acm.Certificate.fromCertificateArn(this, 'Certificate', certificateArn);
 
     // App Distribution
     const appDistribution = new cloudfront.Distribution(this, 'AppDistribution', {
@@ -149,7 +149,7 @@ class MallowsTtsStack extends Stack {
       },
       certificate,
       defaultRootObject: 'index.html',
-      domainNames: [
+      domainNames: domainName && [
         `tts.${domainName}`,
       ],
       errorResponses: [
@@ -221,20 +221,23 @@ class MallowsTtsStack extends Stack {
       },
     }));
 
-    // Hosted Zone
-    const zone = route53.HostedZone.fromLookup(this, 'HostedZone', {
-      domainName,
-    });
+    // If the domain name exists, create a alias record to App Distribution.
+    if (domainName) {
+      // Hosted Zone
+      const zone = route53.HostedZone.fromLookup(this, 'HostedZone', {
+        domainName,
+      });
 
-    // App Distribution Alias Record Target
-    const target = route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(appDistribution));
+      // App Distribution Alias Record Target
+      const target = route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(appDistribution));
 
-    // App Distribution Alias Record
-    new route53.ARecord(this, 'AppDistributionAliasRecord', {
-      zone,
-      recordName: 'tts',
-      target,
-    });
+      // App Distribution Alias Record
+      new route53.ARecord(this, 'AppDistributionAliasRecord', {
+        zone,
+        recordName: 'tts',
+        target,
+      });
+    }
 
     // If the GitHub repository name exists, create a role to cdk deploy from GitHub.
     if (githubRepo) {
