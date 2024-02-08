@@ -1,0 +1,56 @@
+name: deploy
+on:
+  push:
+    branches:
+      - main
+concurrency:
+  group: ${{ github.ref }}
+env:
+  AWS_REGION: ap-northeast-1
+  DOMAIN_NAME: mallows.io
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+      - run: |
+          yarn --frozen-lockfile
+      - run: |
+          yarn cdk deploy \
+            -c executionRoleArn=${{ secrets.EXECUTION_ROLE_ARN }} \
+            -c image=${{ secrets.IMAGE }} \
+            -c modelDataUrl=${{ secrets.MODEL_DATA_URL }} \
+            -c endpointName=${{ secrets.ENDPOINT_NAME }} \
+            -c domainName=${{ env.DOMAIN_NAME }} \
+            -c certificateArn=${{ secrets.CERTIFICATE_ARN }} \
+            -c githubRepo=${{ github.repository }} \
+            --outputs-file outputs.json \
+            --require-approval never \
+            --all
+      - run: |
+          echo "VITE_API_ENDPOINT=$(cat outputs.json | jq -r '.MallowsTts.ApiEndpoint')" >> .env
+      - run: |
+          yarn build
+      - run: |
+          aws s3 sync dist s3://$(cat outputs.json | jq -r '.MallowsTts.AppBucketName') \
+            --exact-timestamps \
+            --delete
+      - run: |
+          aws cloudfront create-invalidation \
+            --distribution-id $(cat outputs.json | jq -r '.MallowsTts.AppDistributionId') \
+            --paths '/*' | jq -r '"INVALIDATION_ID=" + .Invalidation.Id' >> "$GITHUB_ENV"
+      - run: |
+          aws cloudfront wait invalidation-completed \
+            --distribution-id $(cat outputs.json | jq -r '.MallowsTts.AppDistributionId') \
+            --id ${{ env.INVALIDATION_ID }}

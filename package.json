@@ -1,0 +1,29 @@
+{
+  "scripts": {
+    "build": "vite build",
+    "serve": "vite serve"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-sagemaker": "^3.509.0",
+    "@aws-sdk/client-sagemaker-runtime": "^3.509.0",
+    "@quasar/vite-plugin": "^1.6.0",
+    "@types/aws-lambda": "^8.10.133",
+    "@types/node": "^20.11.16",
+    "@vitejs/plugin-vue": "^5.0.3",
+    "autoprefixer": "^10.4.17",
+    "aws-cdk": "^2.126.0",
+    "aws-cdk-lib": "^2.126.0",
+    "constructs": "^10.3.0",
+    "postcss": "^8.4.35",
+    "quasar": "^2.14.3",
+    "sass": "^1.70.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.0",
+    "vite-plugin-html": "^3.2.2",
+    "vue": "^3.4.16",
+    "vue-tsc": "^1.8.27"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}
