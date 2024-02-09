@@ -196,7 +196,7 @@ const onPlay = (e: Event) => {
         <q-space />
         <q-btn dense flat round @click="stop">
           <q-icon name="mdi-power" />
-          <q-tooltip>
+          <q-tooltip class="text-no-wrap">
             TTSサーバーを停止する
           </q-tooltip>
         </q-btn>
@@ -239,7 +239,7 @@ const onPlay = (e: Event) => {
                 </div>
                 <div class="col">
                   <q-card flat>
-                    <q-expansion-item default-opened label="詳細設定">
+                    <q-expansion-item label="詳細設定">
                       <q-card flat>
                         <q-card-section>
                           <div>
@@ -353,7 +353,7 @@ const onPlay = (e: Event) => {
         </template>
       </q-page>
     </q-page-container>
-    <q-footer class="q-pa-sm text-center bg-transparent">
+    <q-footer class="q-px-sm q-pb-sm text-center bg-transparent">
       &copy; {{ new Date().getFullYear() }} tts.mallows.io
     </q-footer>
   </q-layout>
