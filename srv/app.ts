@@ -165,7 +165,9 @@ class MallowsTtsStack extends Stack {
     new events.Rule(this, 'CleanerRule', {
       schedule: events.Schedule.rate(Duration.minutes(1)),
       targets: [
-        new events_targets.LambdaFunction(cleaner),
+        new events_targets.LambdaFunction(cleaner, {
+          retryAttempts: 0,
+        }),
       ],
     });
 
