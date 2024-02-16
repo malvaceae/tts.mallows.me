@@ -53,6 +53,9 @@ class MallowsTtsStack extends Stack {
     const model = new sagemaker.CfnModel(this, 'Model', {
       executionRoleArn,
       primaryContainer: {
+        environment: {
+          OPENAPI_URL: '',
+        },
         image,
         modelDataUrl,
       },
