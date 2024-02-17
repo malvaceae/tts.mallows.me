@@ -58,6 +58,18 @@ setInterval(update, 30 * 1000);
 // update server status
 update();
 
+// model ids
+const modelIds = [
+  {
+    label: 'ずんだもん',
+    value: 1,
+  },
+  {
+    label: '中国うさぎ',
+    value: 0,
+  },
+];
+
 // examples
 const examples = [
   'こんにちは、初めまして。あなたの名前はなんていうの？',
@@ -89,6 +101,9 @@ const languages = [
   },
 ];
 
+// model id
+const modelId = ref(modelIds[0]);
+
 // text
 const text = ref(examples[0]);
 
@@ -115,6 +130,10 @@ const length = ref(1.0);
 
 // params
 const params = computed(() => new URLSearchParams([
+  [
+    'model_id',
+    modelId.value.value.toString(),
+  ],
   [
     'text',
     text.value,
@@ -208,6 +227,18 @@ const onPlay = (e: Event) => {
           <div class="row q-col-gutter-md">
             <div class="col-12 col-md-6">
               <div class="column q-col-gutter-md">
+                <div class="col">
+                  <q-card flat>
+                    <q-card-section>
+                      <div>
+                        モデル
+                      </div>
+                    </q-card-section>
+                    <q-card-section class="q-pt-none">
+                      <q-select v-model="modelId" filled :options="modelIds" popup-content-class="no-shadow" />
+                    </q-card-section>
+                  </q-card>
+                </div>
                 <div class="col">
                   <q-card flat>
                     <q-card-section>
