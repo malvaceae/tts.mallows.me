@@ -62,10 +62,6 @@ update();
 const modelIds = [
   {
     label: 'ずんだもん',
-    value: 1,
-  },
-  {
-    label: '中国うさぎ',
     value: 0,
   },
 ];
@@ -231,7 +227,7 @@ const onPlay = (e: Event) => {
                   <q-card flat>
                     <q-card-section>
                       <div>
-                        モデル
+                        モデル一覧
                       </div>
                     </q-card-section>
                     <q-card-section class="q-pt-none">
