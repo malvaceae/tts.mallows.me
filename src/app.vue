@@ -62,6 +62,10 @@ update();
 const modelIds = [
   {
     label: 'ずんだもん',
+    value: 1,
+  },
+  {
+    label: '中国うさぎ',
     value: 0,
   },
 ];
