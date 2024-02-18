@@ -316,6 +316,9 @@ const onPlay = (e: Event) => {
                     <q-card-section class="q-pt-none">
                       <audio class="block full-width" controls preload="none" :src="voiceUrl.toString()" @error="onError" @loadeddata="onLoadeddata" @play="onPlay" />
                     </q-card-section>
+                    <q-inner-loading :showing="status === 'Loading'">
+                      <q-circular-progress indeterminate size="xl" />
+                    </q-inner-loading>
                   </q-card>
                 </div>
                 <div class="col full-width">
@@ -337,7 +340,7 @@ const onPlay = (e: Event) => {
             </div>
           </div>
         </q-card>
-        <template v-if="!status || ['OutOfService', 'Creating', 'Deleting', 'Loading'].includes(status)">
+        <template v-if="!status || ['OutOfService', 'Creating', 'Deleting'].includes(status)">
           <div class="fullscreen dimmed">
             <div class="absolute-center full-width">
               <div class="column items-center q-gutter-lg">
