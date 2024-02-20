@@ -1757,9 +1757,9 @@ dotenv-expand@^8.0.2:
   integrity sha512-SErOMvge0ZUyWd5B0NXMQlDkN+8r+HhVUsxgOO7IoPDOdDRD2JjExpN6y3KnFR66jsJMwSn1pqIivhU5rcJiNg==
 
 dotenv@^16.0.0:
-  version "16.4.4"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.4.tgz#a26e7bb95ebd36272ebb56edb80b826aecf224c1"
-  integrity sha512-XvPXc8XAQThSjAbY6cQ/9PcBXmFoWuw1sQ3b8HqUCR6ziGXjkTi//kB9SWa2UwqlgdAIuRqAa/9hVljzPehbYg==
+  version "16.4.5"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.5.tgz#cdd3b3b604cb327e286b4762e13502f717cb099f"
+  integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
 
 ejs@^3.1.6:
   version "3.1.9"
@@ -1769,9 +1769,9 @@ ejs@^3.1.6:
     jake "^10.8.5"
 
 electron-to-chromium@^1.4.668:
-  version "1.4.673"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.673.tgz#1f077d9a095761804aec7ec6346c3f4b69b56534"
-  integrity sha512-zjqzx4N7xGdl5468G+vcgzDhaHkaYgVcf9MqgexcTqsl2UHSCmOj/Bi3HAprg4BZCpC7HyD8a6nZl6QAZf72gw==
+  version "1.4.676"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.676.tgz#95179dd62f43926c636ca06c555a1da8754073ff"
+  integrity sha512-uHt4FB8SeYdhcOsj2ix/C39S7sPSNFJpzShjxGOm1KdF4MHyGqGi389+T5cErsodsijojXilYaHIKKqJfqh7uQ==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -2175,10 +2175,10 @@ punycode@^2.1.0, punycode@^2.3.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-quasar@^2.14.4:
-  version "2.14.4"
-  resolved "https://registry.yarnpkg.com/quasar/-/quasar-2.14.4.tgz#e6f454c3f39c295a4be76878de513cbaa14d315d"
-  integrity sha512-l+bSGVMcesVydX1IeWyAAjqCRfigwaonIDqxodvNjZwkifZF29YdCMh9bief2l9k9r23kMl7P5Oqs6EA5ja4ag==
+quasar@^2.14.5:
+  version "2.14.5"
+  resolved "https://registry.yarnpkg.com/quasar/-/quasar-2.14.5.tgz#49b593801bedf72b549ed639717043bab704e417"
+  integrity sha512-N+iRYoby09P9l+R5nKfA0tCPXdXJJHCPifjP8CkL/JASX5yHEjuwh7KoNiWzYLZPbsYXVuQKqwtDy0qXuXTv2g==
 
 queue-microtask@^1.2.2:
   version "1.2.3"
@@ -2319,9 +2319,9 @@ table@^6.8.1:
     strip-ansi "^6.0.1"
 
 terser@^5.10.0:
-  version "5.27.1"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-5.27.1.tgz#b0092975ea1b379d166088a1a57e32f0839d84a2"
-  integrity sha512-29wAr6UU/oQpnTw5HoadwjUZnFQXGdOfj0LjZ4sVxzqwHh/QVkvr7m8y9WoR4iN3FRitVduTc6KdjcW38Npsug==
+  version "5.27.2"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.27.2.tgz#577a362515ff5635f98ba149643793a3973ba77e"
+  integrity sha512-sHXmLSkImesJ4p5apTeT63DsV4Obe1s37qT8qvwHRmVxKTBH7Rv9Wr26VcAMmLbmk9UliiwK8z+657NyJHHy/w==
   dependencies:
     "@jridgewell/source-map" "^0.3.3"
     acorn "^8.8.2"
