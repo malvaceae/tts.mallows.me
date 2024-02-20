@@ -58,15 +58,15 @@ setInterval(update, 30 * 1000);
 // update server status
 update();
 
-// model ids
-const modelIds = [
+// model names
+const modelNames = [
   {
     label: 'ずんだもん',
-    value: 1,
+    value: "zundamon",
   },
   {
     label: '中国うさぎ',
-    value: 0,
+    value: "usagi",
   },
 ];
 
@@ -101,14 +101,14 @@ const languages = [
   },
 ];
 
-// model id
-const modelId = ref(modelIds[0]);
+// model name
+const modelName = ref(modelNames[0]);
 
 // text
 const text = ref(examples[0]);
 
-// auto split
-const autoSplit = ref(true);
+// line split
+const lineSplit = ref(true);
 
 // split interval
 const splitInterval = ref(0.5);
@@ -131,16 +131,16 @@ const length = ref(1.0);
 // params
 const params = computed(() => new URLSearchParams([
   [
-    'model_id',
-    modelId.value.value.toString(),
+    'model_name',
+    modelName.value.value,
   ],
   [
     'text',
     text.value,
   ],
   [
-    'auto_split',
-    autoSplit.value.toString(),
+    'line_split',
+    lineSplit.value.toString(),
   ],
   [
     'split_interval',
@@ -235,7 +235,7 @@ const onPlay = (e: Event) => {
                       </div>
                     </q-card-section>
                     <q-card-section class="q-pt-none">
-                      <q-select v-model="modelId" filled :options="modelIds" popup-content-class="no-shadow" />
+                      <q-select v-model="modelName" filled :options="modelNames" popup-content-class="no-shadow" />
                     </q-card-section>
                   </q-card>
                 </div>
@@ -250,7 +250,7 @@ const onPlay = (e: Event) => {
                       <q-input v-model="text" counter filled maxlength="100" type="textarea" />
                     </q-card-section>
                     <q-card-section class="q-pt-none q-pl-sm">
-                      <q-checkbox v-model="autoSplit" label="改行で分けて生成（分けたほうが感情が乗ります）" />
+                      <q-checkbox v-model="lineSplit" label="改行で分けて生成（分けたほうが感情が乗ります）" />
                     </q-card-section>
                     <q-card-section class="q-pt-none">
                       <div>
