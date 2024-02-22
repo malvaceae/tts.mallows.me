@@ -12,7 +12,7 @@ const $q = useQuasar();
 $q.dark.set(true);
 
 // server status
-const status = ref<'OutOfService' | 'Creating' | 'InService' | 'Deleting' | 'Loading'>();
+const status = ref<'OutOfService' | 'Creating' | 'InService' | 'Deleting' | 'Failed'>();
 
 // watch server status
 watchEffect(() => {
@@ -177,11 +177,14 @@ const now = ref(performance.now());
 // result
 const result = ref<string>();
 
+// is loading
+const isLoading = ref(false);
+
 // on error
 const onError = (e: Event) => {
   if (e.target instanceof HTMLAudioElement) {
     result.value = e.target.error?.message;
-    status.value = 'InService';
+    isLoading.value = false;
   }
 };
 
@@ -189,7 +192,7 @@ const onError = (e: Event) => {
 const onLoadeddata = (e: Event) => {
   if (e.target instanceof HTMLAudioElement) {
     result.value = `Success, time: ${(performance.now() - now.value) / 1000} seconds.`;
-    status.value = 'InService';
+    isLoading.value = false;
   }
 };
 
@@ -197,9 +200,9 @@ const onLoadeddata = (e: Event) => {
 const onPlay = (e: Event) => {
   if (e.target instanceof HTMLAudioElement) {
     if (e.target.readyState === 0) {
+      isLoading.value = true;
       now.value = performance.now();
       result.value = '';
-      status.value = 'Loading';
     }
   }
 };
@@ -320,7 +323,7 @@ const onPlay = (e: Event) => {
                     <q-card-section class="q-pt-none">
                       <audio class="block full-width" controls preload="none" :src="voiceUrl.toString()" @error="onError" @loadeddata="onLoadeddata" @play="onPlay" />
                     </q-card-section>
-                    <q-inner-loading :showing="status === 'Loading'">
+                    <q-inner-loading :showing="isLoading">
                       <q-circular-progress indeterminate size="xl" />
                     </q-inner-loading>
                   </q-card>
@@ -344,7 +347,7 @@ const onPlay = (e: Event) => {
             </div>
           </div>
         </q-card>
-        <template v-if="!status || ['OutOfService', 'Creating', 'Deleting'].includes(status)">
+        <template v-if="!status || ['OutOfService', 'Creating', 'Deleting', 'Failed'].includes(status)">
           <div class="fullscreen dimmed">
             <div class="absolute-center full-width">
               <div class="column items-center q-gutter-lg">
@@ -358,6 +361,16 @@ const onPlay = (e: Event) => {
                     </p>
                     <p>
                       TTSサーバーは30分で自動的に停止します
+                    </p>
+                  </div>
+                </template>
+                <template v-else-if="status === 'Failed'">
+                  <div class="text-center">
+                    <p>
+                      TTSサーバーの起動に失敗しました
+                    </p>
+                    <p>
+                      時間を置いて再度お試しください
                     </p>
                   </div>
                 </template>
