@@ -62,11 +62,11 @@ update();
 const modelNames = [
   {
     label: 'ずんだもん',
-    value: "zundamon",
+    value: 'zundamon',
   },
   {
     label: '中国うさぎ',
-    value: "usagi",
+    value: 'usagi',
   },
 ];
 
