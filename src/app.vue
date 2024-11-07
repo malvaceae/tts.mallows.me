@@ -401,7 +401,7 @@ const onPlay = (e: Event) => {
       </q-page>
     </q-page-container>
     <q-footer class="q-px-sm q-pb-sm text-center bg-transparent">
-      &copy; {{ new Date().getFullYear() }} tts.mallows.io
+      &copy; {{ new Date().getFullYear() }} tts.mallows.me
     </q-footer>
   </q-layout>
 </template>

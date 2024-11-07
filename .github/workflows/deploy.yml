@@ -7,7 +7,7 @@ concurrency:
   group: ${{ github.ref }}
 env:
   AWS_REGION: ap-northeast-1
-  DOMAIN_NAME: mallows.io
+  DOMAIN_NAME: mallows.me
 jobs:
   deploy:
     runs-on: ubuntu-latest
